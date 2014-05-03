@@ -25,3 +25,5 @@ build/Release
 node_modules
 
 bin/
+
+text-splitter/cedict-data.txt
