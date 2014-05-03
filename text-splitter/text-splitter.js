@@ -28,16 +28,18 @@ function initialize(cedict_file) {
     trad_trie.add_words(tradWordsArray);
 }
 
-function split_simp_string(s) {
-    return simp_trie.split_string(s);
+// TODO make this function return complete dictionary entries as well
+function split_string(s, charset) {
+    if (charset === "simp") {
+        return simp_trie.split_string(s);
+    } else if (charset === "trad") {
+        return trad_trie.split_string(s);
+    }
+    throw new Error("Unknown charset");
 }
 
-function split_trad_string(s) {
-    return trad_trie.split_string(s);
-}
 
 module.exports = {
     initialize: initialize,
-    split_simp_string: split_simp_string,
-    split_trad_string: split_trad_string
+    split_string: split_string,
 };

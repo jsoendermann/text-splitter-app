@@ -25,11 +25,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
+
 app.post('/split', function(req, res) {
-    if (req.body.charset === "trad") {
-        res.send(JSON.stringify({result: "ok", split_text: text_splitter.split_trad_string(req.body.text)}) + '\n');
+    if (req.body.charset === "simp" || req.body.charset === "trad") {
+        res.send(JSON.stringify({result: "ok", split_text: text_splitter.split_string(req.body.text, req.body.charset)}) + '\n');
     } else {
-        res.send(JSON.stringify({error: "error"}));
+        res.send(JSON.stringify({result: "error"}));
     }
 });
 
