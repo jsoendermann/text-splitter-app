@@ -1,3 +1,21 @@
+function State() {
+    this.is_final = false;
+    this.children = [];
+}
+State.prototype = {
+    get_child: function(c) {
+        return this.children[c];
+    },
+    
+    add_child: function(c) {
+        // TODO check if there already is a child for char c
+        var new_state = new State();
+        this.children[c] = new_state;
+
+        return new_state;
+    }
+}
+
 function Trie() {
     this.root = new State();
     this.current_state = this.root;
@@ -103,27 +121,5 @@ Trie.prototype = {
         return this.split_text;
     }
 }
-
-
-
-function State() {
-    this.is_final = false;
-    this.children = [];
-}
-State.prototype = {
-    get_child: function(c) {
-        return this.children[c];
-    },
-    
-    add_child: function(c) {
-        // TODO check if there already is a child for char c
-        var new_state = new State();
-        this.children[c] = new_state;
-
-        return new_state;
-    }
-}
-
-
 
 module.exports = Trie;
