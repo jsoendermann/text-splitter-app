@@ -7,11 +7,7 @@ var app = express();
 var text_splitter = require('./text-splitter/text-splitter');
 text_splitter.initialize('./text-splitter/cedict-data.txt');
 
-app.use(favicon());
-app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(cookieParser());
-
 
 app.get('/', function(req, res) {
   res.redirect("http://www.zaoyin.eu/text-splitter-api");
