@@ -10,7 +10,7 @@ text_splitter.initialize('./text-splitter/cedict-data.txt');
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-  res.redirect("http://www.zaoyin.eu/text-splitter-api");
+  res.redirect("http://www.zaoyin.eu/tools/text-splitter-api/");
 });
 
 app.post('/split', function(req, res) {
