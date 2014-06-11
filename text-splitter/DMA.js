@@ -38,6 +38,8 @@ DMA.prototype = {
     add_words: function(dict) {
         var max_length, char_index, word_index, is_final, state, word, prefix;
 
+        dict.sort();
+
         max_length = length_of_longest_word(dict);
 
         for (char_index = 0; char_index < max_length; char_index++) {
@@ -132,9 +134,9 @@ DMA.prototype = {
                     }
                 }
             } else {
-                do {
+                while (state !== this.root && !state.has_child_for(character)) {
                     state = state.failure_link;
-                } while (state !== this.root && !state.has_child_for(character));
+                }
                 
                 if (state === this.root && !state.has_child_for(character)) {
                     // Do nothing
@@ -162,18 +164,32 @@ function find_longest_proper_suffix_that_is_prefix_in_dict(dict, word) {
     for (i = 1; i < word.length; i++) {
         suffix = word.slice(i);
 
-        for (j = 0; j < dict.length; j++) {
-            dict_word = dict[j];
-
-            prefix = dict_word.slice(0, suffix.length);
-
-            if (prefix === suffix) {
-                return prefix;
-            }
+        if (search_prefix_in_dict(dict, suffix) !== -1) {
+            return suffix;
         }
     }
 
     return '';
+}
+
+function search_prefix_in_dict(dict, prefix) {
+    var mid, element;
+    var high = dict.length - 1;
+    var low = 0;
+
+    while (low <= high) {
+        mid = parseInt((low + high) / 2);
+        element = dict[mid].slice(0, prefix.length);
+        if (element > prefix) {
+            high = mid - 1;
+        } else if (element < prefix) {
+            low = mid + 1;
+        } else {
+            return mid;
+        }
+    }
+
+    return -1;
 }
 
 function length_of_longest_word(dict) {
