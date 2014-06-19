@@ -1,4 +1,4 @@
-var fs = require('fs');
+
 var DMA_module = require('./DMA');
 var DMA = DMA_module.DMA;
 
@@ -56,6 +56,7 @@ function split_string(s, charset, strategy) {
 function longest_prefix_match(str, matches) {
     var split_str, i, j;
 
+    // Sort matches by position ascendingly and by length descendingly
     matches.sort(function (x, y) {
         var n = x.pos - y.pos;
         if (n !== 0) {

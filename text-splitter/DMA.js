@@ -1,8 +1,5 @@
-counter = 0;
-
 function State() {
     this.is_final = false;
-    this.id = counter++;
     this.children = {}
     this.matched_words = [];
     this.failure_link = null;
@@ -36,13 +33,15 @@ function DMA() {
 }
 DMA.prototype = {
     add_words: function(dict) {
-        var max_length, char_index, word_index, is_final, state, word, prefix;
+        var length_of_longest_word_in_dict, char_index, word_index, is_final, state, word, prefix;
 
         dict.sort();
 
-        max_length = length_of_longest_word(dict);
+        length_of_longest_word_in_dict = length_of_longest_word(dict);
 
-        for (char_index = 0; char_index < max_length; char_index++) {
+        // Go through the dict from left to right, looping through character
+        // indices first and words second
+        for (char_index = 0; char_index < length_of_longest_word_in_dict; char_index++) {
             for (word_index = 0; word_index < dict.length; word_index++) {
                 word = dict[word_index];
 
@@ -57,33 +56,36 @@ DMA.prototype = {
     },
 
     add_transition: function(dict, word, prefix, character) {
-        var parent_state, child_state, failure_state;
+        var parent_state, child_state;
 
         parent_state = this.get_state_for_string(prefix);
 
         if (parent_state.has_child_for(character)) {
             child_state = parent_state.get_child_for(character);
 
-            if (word.length == prefix.length + 1) {
-                child_state.is_final = true;
-                child_state.matched_words.push(word);
-            }
         } else {
             parent_state.add_child_for(character);
             child_state = parent_state.get_child_for(character);
 
-            if (word.length == prefix.length + 1) {
-                child_state.is_final = true;
-                child_state.matched_words.push(word);
-            }
+            this.add_failure_link_to_state(dict, prefix, character, child_state);
+        }
 
+        if (word.length == prefix.length + 1) {
+            child_state.is_final = true;
+            child_state.matched_words.push(word);
+        }
+    },
 
-            failure_state = this.get_failure_state(dict, prefix + character);
-            child_state.failure_link = failure_state;
-            if (failure_state.is_final) {
-                child_state.is_final = true;
-                child_state.matched_words = child_state.matched_words.concat(failure_state.matched_words);
-            }
+    add_failure_link_to_state: function(dict, prefix, character, child_state) {
+        var failure_state;
+        
+        failure_state = this.get_failure_state(dict, prefix + character);
+            
+        child_state.failure_link = failure_state;
+        
+        if (failure_state.is_final) {
+            child_state.is_final = true;
+            child_state.matched_words = child_state.matched_words.concat(failure_state.matched_words);
         }
     },
 
@@ -139,7 +141,8 @@ DMA.prototype = {
                 }
                 
                 if (state === this.root && !state.has_child_for(character)) {
-                    // Do nothing
+                    // Do nothing and wait for the next character that starts
+                    // the next word
                 } else {
                     state = state.get_child_for(character);
 
