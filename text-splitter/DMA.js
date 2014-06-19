@@ -130,7 +130,7 @@ DMA.prototype = {
                     for (j = 0; j < state.matched_words.length; j++) {
                         matched_word = state.matched_words[j];
 
-                        output.push([i - matched_word.length + 1, matched_word.length]);
+                        output.push({pos: i - matched_word.length + 1, length: matched_word.length});
                     }
                 }
             } else {
@@ -147,7 +147,7 @@ DMA.prototype = {
                         for (j = 0; j < state.matched_words.length; j++) {
                             matched_word = state.matched_words[j];
 
-                            output.push([i - matched_word.length + 1, matched_word.length]);
+                            output.push({pos: i - matched_word.length + 1, length: matched_word.length});
                         }
                     }
                 }

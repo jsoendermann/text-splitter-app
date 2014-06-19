@@ -45,7 +45,7 @@ function split_string(s, charset, strategy) {
     } else if (charset === 'trad') {
         matches = trad_dma.feed_string(s);
     } 
-    
+
     if (strategy === 'longest_prefix_match') {
         return longest_prefix_match(s, matches);
     } else if (strategy === 'minimize_number_of_words_match') {
@@ -57,12 +57,12 @@ function longest_prefix_match(str, matches) {
     var split_str, i, j;
 
     matches.sort(function (x, y) {
-        var n = x[0] - y[0];
-        if (n != 0) {
+        var n = x.pos - y.pos;
+        if (n !== 0) {
             return n;
         }
 
-        return  y[1] - x[1];
+        return  y.len - x.len;
     });
 
 
@@ -71,11 +71,11 @@ function longest_prefix_match(str, matches) {
     i = 0;
     j = 0;
     while (i < str.length) {
-        if (j < matches.length && i === matches[j][0]) {
-            split_str.push(str.slice(i, i + matches[j][1]));
-            i += matches[j][1];
+        if (j < matches.length && i === matches[j].pos) {
+            split_str.push(str.slice(i, i + matches[j].length));
+            i += matches[j].length;
 
-            while (j < matches.length && matches[j][0] < i) {
+            while (j < matches.length && matches[j].pos < i) {
                 j++;
             }
         } else {
