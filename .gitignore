@@ -6,3 +6,5 @@ pids
 node_modules
 
 text-splitter/cedict-data.txt
+
+*.un~
