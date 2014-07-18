@@ -1,4 +1,4 @@
-
+var fs = require('fs');
 var DMA_module = require('./DMA');
 var DMA = DMA_module.DMA;
 

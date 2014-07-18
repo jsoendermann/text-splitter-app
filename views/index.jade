@@ -1,0 +1,71 @@
+extend layout
+block content
+    p 
+        | This page hosts an API that do things with Chinese text. All endpoints
+        | expect JSON data in a post request and return a JSON object. The returned
+        | object contains a 
+        span.monospace result
+        |  field, whose value is either 
+        span.monospace error
+        |  or 
+        span.monospace ok
+        |  and
+        | a number of other fields which depend on the semantics of the endpoint.
+    p.
+        The API currently includes the following endpoints:
+    ul
+        li
+            a(href='/split') /split
+            |  splits Chinese text into words. Splitting text is very efficient, this endpoind can split even large texts in a fraction of a second. It expects a JSON object with
+            | the following two fields:
+            ul
+                li 
+                    span.monospace charset
+                    |  with a value of either 
+                    span.monospace simp
+                    |  or 
+                    span.monospace trad
+                li 
+                    span.monospace text
+                    |  that contains the text to be split
+            | Besides the 
+            span.monospace result
+            |  field, the return value of this endpoint includes a field called 
+            span.monospace split_text
+            |  whose value is an array of the words in the text.
+            
+        li
+            a(href='/cedict') /cedict
+            |  to lookup Cedict entries. This endpoint expects a JSON object with
+            ul
+                li
+                    span.monospace charset
+                    |  with a value of either 
+                    span.monospace simp
+                    |  or 
+                    span.monospace trad
+                li
+                    span.monospace word
+                    |  which contains the word to be looked up
+            | Besides the 
+            span.monospace result
+            |  field, the return value of this endpoint includes a field called 
+            span.monospace records
+            |  whose value is an array of cedict entries. Every entry is a JSON object
+            | with the following four fields:
+            ul
+                li
+                    span.monospace simp
+                li
+                    span.monospace trad
+                li
+                    span.monospace pinyin
+                li
+                    span.monospace english
+    p Planned features for future versions include:
+    ul
+        li Pinyin conversions
+        li Converting between simp/trad
+        li Determining the charset of a text
+        li Other dictionaries
+        li OCR would be cool as well...
