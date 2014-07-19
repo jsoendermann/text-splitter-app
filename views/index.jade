@@ -36,7 +36,7 @@ block content
             
         li
             a(href='/cedict') /cedict
-            |  to lookup Cedict entries. This endpoint expects a JSON object with
+            |  looks up Cedict entries. This endpoint expects a JSON object with
             ul
                 li
                     span.monospace charset
@@ -62,10 +62,28 @@ block content
                     span.monospace pinyin
                 li
                     span.monospace english
+        li
+            a(href='/charset-conversion') /charset-conversion
+            |  converts between simplified and traditional. This endpoint expects a JSON object with
+            ul
+                li
+                    span.monospace charset
+                    |  with a value of either 
+                    span.monospace simp
+                    |  or 
+                    span.monospace trad
+                    |  indicating the original charset.
+                li
+                    span.monospace text
+                    |  which contains the text to be converted
+            | Besides the 
+            span.monospace result
+            |  field, the return value of this endpoint includes a field called 
+            span.monospace converted_text
+            |  whose value is the converted text.
     p Planned features for future versions include:
     ul
         li Pinyin conversions
-        li Converting between simp/trad
         li Determining the charset of a text
         li Other dictionaries
         li OCR would be cool as well...
