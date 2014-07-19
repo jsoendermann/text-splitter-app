@@ -8,3 +8,5 @@ node_modules
 text-splitter/cedict-data.txt
 
 *.un~
+
+add_cedict_to_mongodb/cedict_ts.u8
