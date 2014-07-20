@@ -38,7 +38,7 @@ app.post('/split', function(req, res) {
     text = req.body.text;
     charset = req.body.charset;
 
-    if (charset === 'simp' || charset === 'trad') {
+    if (typeof text !== 'undefined' && (charset === 'simp' || charset === 'trad')) {
         output = JSON.stringify(
             {
                 result:     'ok', 
