@@ -59,11 +59,12 @@ function longest_prefix_match(str, matches) {
     // Sort matches by position ascendingly and by length descendingly
     matches.sort(function (x, y) {
         var n = x.pos - y.pos;
+        
         if (n !== 0) {
             return n;
         }
-
-        return  y.len - x.len;
+        
+        return y.length - x.length;
     });
 
 
